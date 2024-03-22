@@ -21,7 +21,7 @@ function dateToTimestamp(date) {
   const newDate = new Date(date);
   return newDate.valueOf();
 }
-dateToTimestamp('04 Dec 1995 00:12:00 UTC');
+// dateToTimestamp('04 Dec 1995 00:12:00 UTC');
 
 /**
  * Returns the time in hh:mm:ss format from the received date.
@@ -33,9 +33,22 @@ dateToTimestamp('04 Dec 1995 00:12:00 UTC');
  * Date(2023, 5, 1, 8, 20, 55) => '08:20:55'
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
-function getTime(/* date */) {
-  throw new Error('Not implemented');
+function getTime(date) {
+  const hours =
+    String(date.getHours()).length < 2
+      ? `0${date.getHours()}`
+      : `${date.getHours()}`;
+  const minutes =
+    String(date.getMinutes()).length < 2
+      ? `0${date.getMinutes()}`
+      : `${date.getMinutes()}`;
+  const seconds =
+    String(date.getSeconds()).length < 2
+      ? `0${date.getSeconds()}`
+      : `${date.getSeconds()}`;
+  return `${hours}:${minutes}:${seconds}`;
 }
+// getTime(new Date(2023, 5, 1, 8, 20, 55));
 
 /**
  * Returns the name of the day of the week for a given date string.
