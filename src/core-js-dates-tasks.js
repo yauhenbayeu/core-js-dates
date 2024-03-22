@@ -98,7 +98,7 @@ function getNextFriday(date) {
   return date;
 }
 
-getNextFriday(new Date('2024-02-03T00:00:00Z'));
+// getNextFriday(new Date('2024-02-03T00:00:00Z'));
 
 /**
  * Returns the number of days in a specified month and year.
@@ -111,9 +111,11 @@ getNextFriday(new Date('2024-02-03T00:00:00Z'));
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  const newDate = new Date(year, month, 0);
+  return newDate.getDate();
 }
+// getCountDaysInMonth(1, 2024);
 
 /**
  * Returns the total number of days between two dates, including both the start and end dates.
@@ -126,8 +128,13 @@ function getCountDaysInMonth(/* month, year */) {
  * '2024-02-01T00:00:00.000Z', '2024-02-02T00:00:00.000Z'  => 2
  * '2024-02-01T00:00:00.000Z', '2024-02-12T00:00:00.000Z'  => 12
  */
-function getCountDaysOnPeriod(/* dateStart, dateEnd */) {
-  throw new Error('Not implemented');
+function getCountDaysOnPeriod(dateStart, dateEnd) {
+  const newDateStart = new Date(dateStart);
+  const newDateEnd = new Date(dateEnd);
+
+  const difference = newDateEnd - newDateStart;
+
+  return difference / (1000 * 60 * 60 * 24) + 1;
 }
 
 /**
