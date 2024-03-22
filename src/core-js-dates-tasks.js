@@ -154,9 +154,16 @@ function getCountDaysOnPeriod(dateStart, dateEnd) {
  * '2024-02-02', { start: '2024-02-02', end: '2024-03-02' } => true
  * '2024-02-10', { start: '2024-02-02', end: '2024-03-02' } => true
  */
-function isDateInPeriod(/* date, period */) {
-  throw new Error('Not implemented');
+function isDateInPeriod(date, period) {
+  const { start, end } = period;
+  const dateStart = new Date(start);
+  const dateEnd = new Date(end);
+  const givenDate = new Date(date);
+
+  return givenDate >= dateStart && givenDate <= dateEnd;
 }
+
+// isDateInPeriod('2024-02-01', { start: '2024-02-02', end: '2024-03-02' });
 
 /**
  * Returns the date formatted in 'M/D/YYYY, hh:mm:ss a'.
@@ -169,9 +176,34 @@ function isDateInPeriod(/* date, period */) {
  * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function formatDate(/* date */) {
-  throw new Error('Not implemented');
+function formatDate(date) {
+  const newDate = new Date(date);
+  const month = newDate.getUTCMonth();
+  const day = newDate.getUTCDate();
+  const year = newDate.getUTCFullYear();
+  const hours = newDate.getUTCHours();
+  const minutes =
+    String(newDate.getUTCMinutes()).length < 2
+      ? `0${newDate.getUTCMinutes()}`
+      : `${newDate.getUTCMinutes()}`;
+  const seconds =
+    String(newDate.getUTCSeconds()).length < 2
+      ? `0${newDate.getUTCSeconds()}`
+      : `${newDate.getUTCSeconds()}`;
+  let time = '';
+
+  if (hours > 12) {
+    time = `${hours - 12}:${minutes}:${seconds} PM`;
+  } else if (hours === 12) {
+    time = `${hours}:${minutes}:${seconds} PM`;
+  } else {
+    time = `${hours}:${minutes}:${seconds} AM`;
+  }
+
+  return `${month + 1}/${day}/${year}, ${time}`;
 }
+
+formatDate('2024-02-01T15:00:00.000Z');
 
 /**
  * Returns the total number of weekend days (Saturdays and Sundays) in a specified month and year.
