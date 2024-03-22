@@ -75,7 +75,7 @@ function getDayName(date) {
   };
   return weekDays[day];
 }
-getDayName('01 Jan 1970 00:00:00 UTC');
+// getDayName('01 Jan 1970 00:00:00 UTC');
 
 /**
  * Returns the date of the next Friday from a given date.
@@ -88,9 +88,17 @@ getDayName('01 Jan 1970 00:00:00 UTC');
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const newDate = new Date(date);
+  const currentDay = newDate.getDay();
+  let addedDays = 5 - currentDay;
+
+  if (currentDay >= 5) addedDays += 7;
+  date.setDate(newDate.getDate() + addedDays);
+  return date;
 }
+
+getNextFriday(new Date('2024-02-03T00:00:00Z'));
 
 /**
  * Returns the number of days in a specified month and year.
