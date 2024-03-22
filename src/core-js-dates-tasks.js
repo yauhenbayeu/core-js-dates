@@ -203,7 +203,7 @@ function formatDate(date) {
   return `${month + 1}/${day}/${year}, ${time}`;
 }
 
-formatDate('2024-02-01T15:00:00.000Z');
+// formatDate('2024-02-01T15:00:00.000Z');
 
 /**
  * Returns the total number of weekend days (Saturdays and Sundays) in a specified month and year.
@@ -217,9 +217,20 @@ formatDate('2024-02-01T15:00:00.000Z');
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountWeekendsInMonth(month, year) {
+  const date = new Date(year, month, 0);
+  let numberOfWeekends = 0;
+  const amountOfDays = date.getDate();
+
+  for (let i = 1; i <= amountOfDays; i += 1) {
+    const currentDate = new Date(year, month - 1, i);
+    const weekDay = currentDate.getDay();
+
+    if (weekDay === 6 || weekDay === 0) numberOfWeekends += 1;
+  }
+  return numberOfWeekends;
 }
+// getCountWeekendsInMonth(5, 2022);
 
 /**
  * Returns the week number of the year for a given date.
@@ -234,8 +245,17 @@ function getCountWeekendsInMonth(/* month, year */) {
  * Date(2024, 0, 31) => 5
  * Date(2024, 1, 23) => 8
  */
-function getWeekNumberByDate(/* date */) {
-  throw new Error('Not implemented');
+function getWeekNumberByDate(date) {
+  const newDate = new Date(date);
+  const startOfTheYear = new Date(date.getFullYear(), 0, 1);
+
+  const daysAfterStartOfTheYear = Math.floor(
+    (newDate - startOfTheYear) / (24 * 60 * 60 * 1000) + 1
+  );
+  const startOfTheWeek =
+    startOfTheYear.getDay() === 0 ? 7 : startOfTheYear.getDay();
+
+  return Math.ceil((daysAfterStartOfTheYear + startOfTheWeek) / 7);
 }
 
 /**
