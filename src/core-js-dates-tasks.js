@@ -247,7 +247,7 @@ function getCountWeekendsInMonth(month, year) {
  */
 function getWeekNumberByDate(date) {
   const newDate = new Date(date);
-  const startOfTheYear = new Date(date.getFullYear(), 0, 1);
+  const startOfTheYear = new Date(newDate.getFullYear(), 0, 1);
 
   const daysAfterStartOfTheYear = Math.floor(
     (newDate - startOfTheYear) / (24 * 60 * 60 * 1000) + 1
@@ -257,6 +257,7 @@ function getWeekNumberByDate(date) {
 
   return Math.ceil((daysAfterStartOfTheYear + startOfTheWeek) / 7);
 }
+// getWeekNumberByDate(new Date(2024, 0, 3));
 
 /**
  * Returns the date of the next Friday the 13th from a given date.
@@ -269,9 +270,29 @@ function getWeekNumberByDate(date) {
  * Date(2024, 0, 13) => Date(2024, 8, 13)
  * Date(2023, 1, 1) => Date(2023, 9, 13)
  */
-function getNextFridayThe13th(/* date */) {
-  throw new Error('Not implemented');
+function getNextFridayThe13th(date) {
+  const newDate = new Date(date);
+  let givenDay = newDate.getDay();
+  const year = newDate.getFullYear();
+  const month = newDate.getMonth();
+  let isFriday13 = false;
+  let friday13 = null;
+
+  while (!isFriday13) {
+    const nextFullDate = new Date(year, month, givenDay);
+    const nextDay = nextFullDate.getDay();
+    const nextDate = nextFullDate.getDate();
+
+    if (nextDay === 5 && nextDate === 13) {
+      isFriday13 = true;
+      friday13 = nextFullDate;
+    }
+
+    givenDay += 1;
+  }
+  return friday13;
 }
+// getNextFridayThe13th(new Date(2024, 0, 13));
 
 /**
  * Returns the quarter of the year for a given date.
@@ -284,9 +305,23 @@ function getNextFridayThe13th(/* date */) {
  * Date(2024, 5, 1) => 2
  * Date(2024, 10, 10) => 4
  */
-function getQuarter(/* date */) {
-  throw new Error('Not implemented');
+function getQuarter(date) {
+  const newDate = new Date(date);
+  const month = newDate.getMonth();
+  let quarter = null;
+
+  if (month < 3) {
+    quarter = 1;
+  } else if (month < 6) {
+    quarter = 2;
+  } else if (month < 9) {
+    quarter = 3;
+  } else {
+    quarter = 4;
+  }
+  return quarter;
 }
+// getQuarter(new Date(2024, 5, 1));
 
 /**
  * Generates an employee's work schedule within a specified date range, based on a pattern of working and off days.
