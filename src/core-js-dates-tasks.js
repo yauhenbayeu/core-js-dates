@@ -250,7 +250,7 @@ function getWeekNumberByDate(date) {
   const startOfTheYear = new Date(newDate.getFullYear(), 0, 1);
 
   const daysAfterStartOfTheYear = Math.floor(
-    (newDate - startOfTheYear) / (24 * 60 * 60 * 1000) + 1
+    (newDate - startOfTheYear) / (24 * 60 * 60 * 1000)
   );
   const startOfTheWeek =
     startOfTheYear.getDay() === 0 ? 7 : startOfTheYear.getDay();
