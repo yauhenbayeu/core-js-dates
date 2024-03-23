@@ -341,9 +341,37 @@ function getQuarter(date) {
  * { start: '01-01-2024', end: '15-01-2024' }, 1, 3 => ['01-01-2024', '05-01-2024', '09-01-2024', '13-01-2024']
  * { start: '01-01-2024', end: '10-01-2024' }, 1, 1 => ['01-01-2024', '03-01-2024', '05-01-2024', '07-01-2024', '09-01-2024']
  */
-function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
-  throw new Error('Not implemented');
+function getWorkSchedule(period, countWorkDays, countOffDays) {
+  const { start, end } = period;
+  const [startDay, startMonth, startYear] = start.split('-');
+  const startDate = new Date(startYear, startMonth - 1, startDay);
+  const [endDay, endMonth, endYear] = end.split('-');
+  const endDate = new Date(endYear, endMonth - 1, endDay);
+
+  const schedule = [];
+  const currentDate = new Date(startDate);
+
+  const formatScheduleDate = (date) => {
+    const d = `0${date.getDate()}`.slice(-2);
+    const m = `0${date.getMonth() + 1}`.slice(-2);
+    const y = date.getFullYear();
+    return `${d}-${m}-${y}`;
+  };
+
+  while (currentDate <= endDate) {
+    for (let i = 0; i < countWorkDays && currentDate <= endDate; i += 1) {
+      schedule.push(formatScheduleDate(new Date(currentDate)));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    if (currentDate <= endDate) {
+      currentDate.setDate(currentDate.getDate() + countOffDays);
+    }
+  }
+
+  return schedule;
 }
+
+getWorkSchedule({ start: '01-01-2024', end: '15-01-2024' }, 1, 3);
 
 /**
  * Determines whether the year in the provided date is a leap year.
