@@ -90,7 +90,7 @@ function getDayName(date) {
  */
 function getNextFriday(date) {
   const newDate = new Date(date);
-  const currentDay = newDate.getDay();
+  const currentDay = newDate.getUTCDay();
   let addedDays = 5 - currentDay;
 
   if (currentDay >= 5) addedDays += 7;
