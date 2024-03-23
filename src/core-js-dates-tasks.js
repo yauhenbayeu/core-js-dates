@@ -371,7 +371,7 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
   return schedule;
 }
 
-getWorkSchedule({ start: '01-01-2024', end: '15-01-2024' }, 1, 3);
+// getWorkSchedule({ start: '01-01-2024', end: '15-01-2024' }, 1, 3);
 
 /**
  * Determines whether the year in the provided date is a leap year.
@@ -385,9 +385,13 @@ getWorkSchedule({ start: '01-01-2024', end: '15-01-2024' }, 1, 3);
  * Date(2022, 2, 1) => false
  * Date(2020, 2, 1) => true
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const givenYear = new Date(date).getFullYear();
+  return (
+    (givenYear % 4 === 0 && givenYear % 100 !== 0) || givenYear % 400 === 0
+  );
 }
+isLeapYear(new Date(2024, 2, 1));
 
 module.exports = {
   dateToTimestamp,
