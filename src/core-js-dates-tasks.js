@@ -63,7 +63,7 @@ function getTime(date) {
  */
 function getDayName(date) {
   const newDate = new Date(date);
-  const day = newDate.getDay();
+  const day = newDate.getUTCDay();
   const weekDays = {
     0: 'Sunday',
     1: 'Monday',
